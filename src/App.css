@@ -1,38 +1,97 @@
-.App {
+html, body, p {
+  margin: 0px;
+  padding: 0px;
+}
+
+.UserInfo{
+  position: absolute;
+  bottom: 55px;
+  left: 10px;
+}
+
+.ChatMessageInputWrapper {
+  display: flex;
+}
+
+.LoginModalHeader {
+  width: 100%;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.LoginModalHeader p {
+  font-size: 18px;
+  font-weight: 600;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.LoginModalFooter, .PopUpModalFooter{
+  height: 18px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+#anon-log-in-btn, #log-in-btn, #pop-up-send-btn, #pop-up-quit-btn  {
+  position: absolute;
+  bottom: 5px;
+}
+
+#anon-log-in-btn, #pop-up-quit-btn {
+  left: 5px;
+}
+
+#log-in-btn, #pop-up-send-btn {
+  right: 5px;
+}
+
+.ChatMessageWrapper{
+  height: calc(100vh - 120px);
+  overflow-y: scroll;
+  border-bottom: 2px solid #ced4da;
+}
+
+.Message {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
-.App-link {
-  color: #61dafb;
+#chat-message-send-btn {
+  margin-left: 10px;
+  height: 38px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#chat-message-send-btn-content-wrapper {
+  display: flex;
+  margin: 0px;
+  padding: 0px;
+}
+
+#chat-message-send-btn-content-wrapper span {
+  margin-left: 5px;
+  margin-right: -5px;
+}
+
+#messages-header {
+  font-size: 20px;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+#message-username {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+#message-input {
+  margin-left: 10px;
+  width: 200px;
+}
+
+#open-page-btn {
+  position: fixed;
+  bottom: 5px;
+  left: 5px
+}
+
+#revoke-chat-btn {
+  position: fixed;
+  bottom: 5px;
+  right: 5px
 }
