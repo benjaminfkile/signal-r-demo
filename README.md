@@ -12,8 +12,10 @@ npm i
 
 npm start
 
+```javascript
 ## Usage
 
 import operations
 
 operations.signalROut({type: "chatMsg", userName: userName, message: message })
+```
