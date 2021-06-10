@@ -3,8 +3,8 @@ import connection from "./Hub/Hub"
 import operations from "./Operations/Operations"
 import { Button, FormControl, Modal } from "react-bootstrap"
 //@ts-ignore
-import { v4 as uuidv4 } from 'uuid';
-import 'bootstrap/dist/css/bootstrap.min.css'
+import { v4 as uuidv4 } from "uuid";
+import "bootstrap/dist/css/bootstrap.min.css"
 import "./App.css"
 
 interface AppTypes {
@@ -14,7 +14,7 @@ interface AppTypes {
   messages: Array<any>
   messageInput: string
   remoteKey: string
-  popUpModal: boolean
+  popUpPrompt: boolean
   popUpUrl: string
   popUpRemoteKey: string
 }
@@ -30,15 +30,29 @@ class App extends Component<{}, AppTypes> {
       messages: [],
       messageInput: "",
       remoteKey: "",
-      popUpModal: false,
+      popUpPrompt: false,
       popUpUrl: "",
       popUpRemoteKey: ""
     }
   }
 
+  /*
+  Connection is imported from ./Hub/Hub so we can use it in our app,
+  “newMessage" is the Azure function we are listening to, 
+  “this.signalRIn" will receive the response from the Azure function.
+  All clients connected will receive the same message.
+  */
+
   componentDidMount() {
-    connection.on('newMessage', this.signalRIn)
+    connection.on("newMessage", this.signalRIn)
   }
+  /*
+  Based on what message we get back we can decide what functions to call in our client,
+  you can also set up multiple functions on the same service in Azure. 
+  Say you have (in Azure) an “openPopUp” function.  You would then have somewhere in your client
+  connection.on(“openPopUp”, this.someOtherFunction). In this particular case its the same function 
+  so I dont really see the point.
+   */
 
   signalRIn = (input: any) => {
     if (input.type === "chatMsg") {
@@ -47,6 +61,7 @@ class App extends Component<{}, AppTypes> {
     if (input.type === "openPopUp") {
       this.openPopUp(input.remoteKey, input.url)
     }
+    console.log("Message from SignalR: ", input)
   }
 
   setEventType = (type: string) => {
@@ -87,18 +102,18 @@ class App extends Component<{}, AppTypes> {
   }
 
   togglePopUp = () => {
-    if (this.state.popUpModal) {
-      this.setState({ popUpModal: false })
+    if (this.state.popUpPrompt) {
+      this.setState({ popUpPrompt: false })
 
     } else {
-      this.setState({ popUpModal: true })
+      this.setState({ popUpPrompt: true })
     }
   }
 
   openPopUp = (remoteKey: string, url: string) => {
     if (this.state.remoteKey === remoteKey) {
       window.open(url);
-    }else{
+    } else {
       this.togglePopUp()
     }
   }
@@ -143,14 +158,14 @@ class App extends Component<{}, AppTypes> {
               </div>
             </Modal.Footer>
           </Modal>}
-        {this.state.popUpModal && <Modal
+        {this.state.popUpPrompt && <Modal
           show={true}
           backdrop="static"
           keyboard={true}
         >
           <Modal.Header>
             <div className="LoginModalHeader">
-              <p>Welcome to the ELM SignalR Demo!</p>
+              <p>Trigger a popup on a connected client</p>
             </div>
           </Modal.Header>
           <Modal.Body>
